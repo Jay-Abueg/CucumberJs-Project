@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "chromedriver": "^123.0.0"
+  },
+  "name": "cucumberproject",
+  "version": "1.0.0",
+  "type": "module",  
+  "main": "index.js",
+  "devDependencies": {
+    "@cucumber/cucumber": "^10.3.1",
+    "cucumber": "^6.0.7",
+    "selenium-webdriver": "^4.18.1"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/cucumber-js features"
+  },
+  "author": "Jay Abueg",
+  "license": "ISC",
+  "description": ""
+
+}
