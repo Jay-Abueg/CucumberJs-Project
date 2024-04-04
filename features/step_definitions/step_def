@@ -1,0 +1,43 @@
+import {Given, When, Then, After} from '@cucumber/cucumber';
+import  { Builder, By, Key, WebElement } from 'selenium-webdriver';
+import { strict as assert, strict } from 'assert';
+
+Given('user visits the {string}', async function (website) {
+  this.driver = new Builder()
+      .forBrowser('chrome')
+      .build();
+      
+  await this.driver.get(website);
+
+});
+
+When('user enter username {string} and password {string}', async function (username, password) {
+  await this.driver.findElement(By.id("user-name")).sendKeys(username);
+  await this.driver.findElement(By.id("password")).sendKeys(password);
+
+  await this.driver.findElement(By.id("login-button")).click();
+});
+
+Then('user can view the product page', async function () {
+  var text = await this.driver.findElement(By.xpath('//*[@class="title"]')).getText();
+  assert.equal(text, "Products");
+
+});  
+
+Then('user can\'t view the product page', async function () {
+  var text = await this.driver.findElement(By.xpath('//*[@class="error-message-container error"]')).getText();
+  assert.equal(text, "Epic sadface: Username and password do not match any user in this service");
+});
+
+Then('user is required to input a {string}', async function (required){
+  var text = await this.driver.findElement(By.xpath('//*[@class="error-message-container error"]')).getText();
+  if (required == "username") {
+    assert.equal(text, "Epic sadface: Username is required");
+  } else {
+    assert.equal(text, "Epic sadface: Password is required");
+  }
+});
+
+Then('browser closes', async function () {
+  await this.driver.close();
+});
